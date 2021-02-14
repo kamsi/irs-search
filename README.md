@@ -1,6 +1,6 @@
 <h1>IRS search</h1>
 
-This are the 2 scripts which should complete 2 tasks asked for in the test.
+These are the 2 scripts which should complete 2 tasks asked for in the test.
 It is assumed that python3 (my code was tested against Python 3.7.5) is installed together with pip.
 
 <h2>Setup</h2>
