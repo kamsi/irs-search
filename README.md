@@ -1,13 +1,15 @@
+<h1>IRS search</h1>
+
 This are the 2 scripts which should complete 2 tasks asked for in the test.
 It is assumed that python3 is installed together with pip.
 
-Setup:
+<h2>Setup</h2>:
 
 1. Clone the repository
 2. In the root folder run: pip install -r requirements.txt
 
 
-Tasks:
+<h2>Tasks</h2>:
 
 1. Taking a list of tax form names (ex: "Form W-2", "Form 1095-C"), search the
 website and return some informational results. Specifically, you must return
