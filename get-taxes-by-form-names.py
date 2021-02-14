@@ -1,10 +1,6 @@
 import sys
-import requests
-from bs4 import BeautifulSoup
-from time import sleep
 import json
 import re
-import math
 import os
 import commons
 import config
@@ -33,6 +29,8 @@ for title in titles:
     page_counters = commons.get_page_counters(extracted_html, results_per_page)
     total_results = page_counters['total_results']
     pages_cnt = page_counters['pages_cnt']
+    min_year = None
+    max_year = None
 
     for page_num in range(pages_cnt):
         sys.stdout.write('''\rProgress {0} / {1}'''.format(page_num + 1, pages_cnt))
@@ -46,8 +44,6 @@ for title in titles:
         rows = extracted_html.find_all("tr")
         # First 5 rows are irrelevant markup
         rows = rows[5:]
-        min_year = None
-        max_year = None
         for row in rows:
             fields = list(map(lambda x: x.get_text().strip(), row.find_all("td")))
             if not min_year or min_year > fields[2]:
