@@ -6,19 +6,11 @@ import json
 import re
 import math
 import os
+import commons
+import config
 
-results_per_page = 200
-
-config = {
-    'baseUrl': 'https://apps.irs.gov/app/picklist/list/priorFormPublication.html',
-    'params': {
-        'resultsPerPage': results_per_page,
-        'sortColumn': 'currentYearRevDate',
-        'indexOfFirstRow': 0,
-        'criteria': 'formNumber',
-        'isDescending': 'false'
-    }
-}
+results_per_page = config.results_per_page
+config = config.config
 
 if len(sys.argv) < 2:
     raise ValueError('At least one title is needed')
@@ -33,28 +25,23 @@ for title in titles:
     print("Retrieving results for Title: %s" % title)
     title_results = []
     params = {**config['params'], 'value': title }
-    r = requests.get(config['baseUrl'], params=params)
-    extracted_html = BeautifulSoup(r.text, 'html.parser')
-    if r.status_code != requests.codes.ok:
+    extracted_html = commons.get_page(0, params, 0)
+    if not extracted_html:
         print('Could not retrieve the first results page, skiping title %s' % title)
+        continue
     # Retrieve the total results number by parsing info from table
-    search_fields_table = extracted_html.find('table', class_='searchFieldsTable')
-    pagination = search_fields_table.find('th', class_='ShowByColumn')
-    pagination = pagination.get_text().strip().replace('\n', '')
-    total_results = int(re.sub(r'.+ of (\d+?) files.*', r'\1', pagination))
-    pages_cnt = math.ceil(total_results / results_per_page)
+    page_counters = commons.get_page_counters(extracted_html, results_per_page)
+    total_results = page_counters['total_results']
+    pages_cnt = page_counters['pages_cnt']
 
     for page_num in range(pages_cnt):
         sys.stdout.write('''\rProgress {0} / {1}'''.format(page_num + 1, pages_cnt))
         html = None
         # We already extracted the 0 page when getting total_results
         if page_num > 0:
-            params['indexOfFirstRow'] = page_num * results_per_page
-            r = requests.get(config['baseUrl'], params=params)
-            if r.status_code != requests.codes.ok:
-                print('Ups, something went wrong, could not retrieve page %d, will continue without it' % page_num)
+            extracted_html = commons.get_page(page_num * results_per_page, params, page_num)
+            if not extracted_html:
                 continue
-            extracted_html = BeautifulSoup(r.text, 'html.parser')
 
         rows = extracted_html.find_all("tr")
         # First 5 rows are irrelevant markup
