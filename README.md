@@ -6,7 +6,7 @@ It is assumed that python3 (my code was tested against Python 3.7.5) is installe
 <h2>Setup</h2>
 
 1. Clone the repository
-2. In the root folder run: pip install -r requirements.txt
+2. In the root folder run: `pip install -r requirements.txt`
 
 
 <h2>Tasks</h2>
@@ -18,7 +18,7 @@ is available for download.
 
 To use the script, run the setup instructions, then, from the root of the project execute:
 
-python get-taxes-by-form-names.py 'Form W-2' 'Form 11-C'... <Your other form name>
+`python get-taxes-by-form-names.py 'Form W-2' 'Form 11-C'... <Your other form name>`
 
 
 The results are formatted as JSON and written under "json" directory. Example file path: json/Form W-2.json
@@ -32,7 +32,7 @@ Name - Year" (ex: Form W-2/Form W-2 - 2020.pdf )
 OK, so it should do the trick, yet it is not (yet?) optimized (probably some prallelism over final PDF requests would not harm).
 To run the script, issue this from the root:
 
-python get-tax-pdfs.py "Form W-2" 2019-2021
+`python get-tax-pdfs.py "Form W-2" 2019-2021`
 
 You can also pass single year as second param
 The files are written according to given structure, except I also added pdf directory. So a result path to single PDF might look like `pdf/Form W-2`.
