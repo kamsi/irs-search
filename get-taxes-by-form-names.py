@@ -5,6 +5,7 @@ from time import sleep
 import json
 import re
 import math
+import os
 
 results_per_page = 200
 
@@ -23,8 +24,11 @@ if len(sys.argv) < 2:
     raise ValueError('At least one title is needed')
 
 titles = sys.argv[1:]
-
 print("Starting extraction of json results for %d titles" % len(titles))
+
+if not os.path.exists("json"):
+    os.mkdir('json')
+
 for title in titles:
     print("Retrieving results for Title: %s" % title)
     title_results = []
