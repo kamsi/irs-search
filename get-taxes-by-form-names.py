@@ -46,10 +46,11 @@ for title in titles:
         rows = rows[5:]
         for row in rows:
             fields = list(map(lambda x: x.get_text().strip(), row.find_all("td")))
-            if not min_year or min_year > fields[2]:
-                min_year = fields[2]
-            if not max_year or max_year < fields[2]:
-                max_year = fields[2]
+            year = int(fields[2])
+            if not min_year or min_year > year:
+                min_year = year
+            if not max_year or max_year < year:
+                max_year = year
 
             title_results.append({
                 "form_number": fields[0],

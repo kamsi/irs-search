@@ -17,6 +17,9 @@ year_range = sys.argv[2]
 try:
     year_range = list(map(lambda x: int(x), year_range.split("-")))
     year_range.sort()
+    # It's OK to pass just one year, in which case we create normalized range
+    if len(year_range) == 1:
+        year_range.append(year_range[0])
 except:
     raise ValueError('Invalid year range, example valid year range: 2018-2020')
 
