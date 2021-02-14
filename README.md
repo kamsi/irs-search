@@ -34,6 +34,6 @@ To run the script, issue this from the root:
 
 `python get-tax-pdfs.py "Form W-2" 2019-2021`
 
-You can also pass single year as second param
+You can also pass single year as second param.
 The files are written according to given structure, except I also added pdf directory. So a result path to single PDF might look like `pdf/Form W-2`.
 I did not want to clutter the root director.
